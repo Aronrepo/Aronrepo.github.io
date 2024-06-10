@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Advent of Code</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/sub.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+<body class="is-preload">
+			<section id="five" class="main style1">
+				<div class="container">
+					<header class="major special">
+						<h2>Advent of Code</h2>
+					</header>
+					<section>
+
+						<div class="box alt">
+							<div class="row gtr-uniform gtr-50">
+								<div class="col-12"><span class="image fit"><img src="images/advent_header.jpg" alt="" /></span></div>
+								
+							</div>
+						</div>
+						<p></span>Do you like algorithm? I hope you do. </p>
+                        <p>I highly recommend an annual event that starts starts on the 1st of December, inviting participants from around the globe to solve a series of coding puzzles throughout the month. Created by Eric Wastl, each day leading up to Christmas, a new set of challenges is released, ranging in difficulty and covering a wide array of programming concepts and problem-solving techniques.
+                            Each day has its own challenge; however, there is a nice story around it that ties the event together as a whole.
+                        </p>
+                        <p>If you don't want to compete or just want to pratice your algorithm skill don't worry--you can check all the previous challenges by visiting the website.</p>
+                        <p>Here you can find it:  <a href="https://adventofcode.com/">Advent of Code</a></p>
+
+							<h4>My solutions</h4>
+							<a href="https://github.com/Aronrepo/codeadvent" class="icon brands fa-github" style="font-size: 20px;"> Github repository of this project</a>
+                            <p>I've completed some of the puzzles to have an idea how it looks like. Here is one of them.</p>
+                            <h4>Day 4 Scratchcards</h4>
+                            <div class="col-12"><span class="image fit"><img src="images/advent_scratchcard.png" alt="" /></span></div>
+							<p>Here is a short summary of the story behind the challenge. <br>
+                                There is an Elf which has a pile of colorful square cards. He asks you to find out the winning number of these cards. <br>
+                                Each card has two lists of numbers separated by a vertial bar (|): a list of winning number and then a list of number you have. <br>
+                                The fist match makes the card worth one point and each match after the first doubles the point value of the card.
+                                
+                                <br>
+                                </p>
+                                <h5>For example:</h5>
+                                <pre><code>Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
+Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
+Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
+Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
+Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
+Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11</code></pre>
+                            
+                            <p>In the above example, card 1 has five winning numbers (41, 48, 83, 86, and 17) and eight numbers you have (83, 86, 6, 31, 17, 9, 48, and 53). Of the numbers you have, four of them (48, 83, 17, and 86) are winning numbers! That means card 1 is worth 8 points (1 for the first match, then doubled three times for each of the three matches after the first).
+                                Card 2 has two winning numbers (32 and 61), so it is worth 2 points. Card 3 has two winning numbers (1 and 21), so it is worth 2 points. Card 4 has one winning number (84), so it is worth 1 point. Card 5 has no winning numbers, so it is worth no points. Card 6 has no winning numbers, so it is worth no points. So, in this example, the Elf's pile of scratchcards is worth <strong>13</strong> points.
+
+                            </p>
+                            <p>This is only an example; the real input has a much larger table. Let's look at a solution for this.
+                            </p>
+                            <p>First Let's read input from a file:</p>
+                            <pre><code>fileContent = fs.readFileSync(filePath, "utf-8");</code></pre>
+                            <p>Split input file's lines into arrays:</p>
+                            <pre><code>const lines = fileContent?.split(/\r?\n/);</code></pre>
+                            <p>Iterate over the lines and sum up the winning numbers using the <strong>forEach</strong> function. <br>
+                                I placed the winner and own numbers into two sparate Sring variables. Which are 
+                                <strong>winnerNumbersString</strong>  and the <strong>ownNumbersString</strong>.  <br>
+                                The replace function is needed because, if you check carefully, the spaces between numbers can vary according to the length of the numbers. I only need one space between the numbers not two or more. <br>
+                                Then convert the String of numbers into string of arrays. When you have the winning numbers (<strong>winnerNumbers</strong>) and your own numbers (<strong>ownNumbers</strong>) as arrays of strings, you can use the filter function to get only the exact matches. Finally, you can calculate the winning number of the card by raising two to the power of the length of these matches and then add it to the <strong>sumPoints</strong> accumulator variable.</p>
+                            <pre class="foreach"><code>
+let sumPoints = 0;
+lines?.forEach((line) => {
+let winnerNumbersString: string = line
+    .split("|")[0]
+    .split(":")[1]
+    .trim()
+    .replace(/\s+/g, " ");
+let ownNumbersString: string = line
+    .split("|")[1]
+    .trim()
+    .replace(/\s+/g, " ");
+                            
+let winnerNumbers: string[] = winnerNumbersString.split(" ");
+let ownNumbers: string[] = ownNumbersString.split(" ");
+                            
+let matches = ownNumbers.filter((item) => winnerNumbers.includes(item));
+    if (matches.length !== 0) {
+        sumPoints += Math.pow(2, matches.length - 1);
+    }
+});</code></pre>
+					</section>
+				</div>
+			</section>
+
+            			
+		
+			<section id="footer">
+				<ul class="icons">
+					<li><a href="https://www.linkedin.com/in/arontas/" class="icon brands alt fa-linkedin"><span class="label">Twitter</span></a></li>
+					<li><a href="https://github.com/Aronrepo" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>Áron's portfolio</li><li>recent projects</li>
+				</ul>
+			</section>
+</body>
+</html>
